@@ -7,7 +7,7 @@ namespace MyForumProject.Models
     {
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<CommentNotification> Notifications { get; set; }
-        public virtual ICollection<FavoritePost> FavoritePosts { get; set; }
+        public virtual ISet<FavoritePost> FavoritePosts { get; set; }
 
     }
 

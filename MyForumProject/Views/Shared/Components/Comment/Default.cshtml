@@ -1,0 +1,17 @@
+﻿@model Comment
+<div>
+    <b>Write comment</b>
+</div>
+
+<div asp-validation-summary="All"></div>
+
+<form method="post" asp-controller="Comment" asp-action="Create">
+    <div class="post__answer">
+        <textarea asp-for="Content" class="post__answer-textarea"></textarea>
+        <input hidden type="text" asp-for="PostId" value="@Model.PostId" />
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+
+    </div>
+</form>

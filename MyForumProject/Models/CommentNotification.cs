@@ -9,7 +9,8 @@ namespace MyForumProject.Models
         [Required]
         public virtual AppUser User { get; set; }
         [Required]
-        public string Content { get; set; }
+        public virtual Comment Comment { get; set; }
+
         [Required]
         public DateTime DateTime { get; set; } = DateTime.Now;
 

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyForumProject.Models
 {
@@ -12,8 +13,10 @@ namespace MyForumProject.Models
         public virtual Post Post { get; set; }
         public Rate Rate { get; set; } = Rate.None;
 
+ 
+
     }
 
 
- 
+
 }

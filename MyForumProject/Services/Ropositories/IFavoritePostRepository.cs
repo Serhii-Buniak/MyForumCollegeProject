@@ -18,9 +18,15 @@ namespace MyForumProject.Services.Ropositories
         bool Contain(long id);
         bool Contain(FavoritePost post);
 
+        bool ContainPost(long postId, AppUser appUser);
+        bool ContainPost(Post post, AppUser appUser);
+
         void Update(FavoritePost post);
 
         FavoritePost GetById(long id);
         Task<FavoritePost> GetByIdAsync(long id);
+
+        FavoritePost GetByPost(long postId, AppUser appUser);
+        FavoritePost GetByPost(Post post, AppUser appUser);
     }
 }

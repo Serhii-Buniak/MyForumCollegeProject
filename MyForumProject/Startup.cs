@@ -28,7 +28,7 @@ namespace MyForumProject
             services.AddDbContext<ApplicationDbContext>(options =>
     options.UseLazyLoadingProxies().UseSqlServer(connectionString));
 
-            services.AddIdentity<AppUser, IdentityRole>(opts =>
+            services.AddDefaultIdentity<AppUser>(opts =>
             {
                 opts.User.RequireUniqueEmail = true;
                 opts.Password.RequiredLength = 6;
@@ -37,16 +37,17 @@ namespace MyForumProject
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders();
+                .AddDefaultTokenProviders();
 
-            services.AddControllersWithViews();
-
+       
             services.AddTransient<IPostRepository, EFPostRepository>();
             services.AddTransient<IPostRateRepository, EFPostRateRepository>();
             services.AddTransient<ICommentRepository, EFCommentRepository>();
             services.AddTransient<ICommentRateRepository, EFCommentRateRepository>();
             services.AddTransient<IFavoritePostRepository, EFFavoritePostRepository>();
             services.AddTransient<ICommentNotificationRepository, EFCommentNotificationRepository>();
+
+            services.AddControllersWithViews();
 
         }
 
@@ -56,9 +57,12 @@ namespace MyForumProject
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -66,6 +70,7 @@ namespace MyForumProject
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -73,6 +78,7 @@ namespace MyForumProject
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

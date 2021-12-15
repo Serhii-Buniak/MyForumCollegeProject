@@ -1,0 +1,212 @@
+﻿@model Post
+@inject IFavoritePostRepository FavoriteRepository
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
+
+@{
+    AppUser user = await UserManager.GetUserAsync(User);
+    PostRate userRate = Model.UserRate(user);
+}
+
+<div class="post">
+    <div class="post__container">
+        <div class="post__top">
+            <div class="post__username-wrapper">
+                <u>@Model.User.UserName</u>
+            </div>
+            <div class="post__rate-wrapper">
+
+                @if (userRate == null || userRate.Rate == Rate.None)
+                {
+                    <div class="post__rate">
+                        <a asp-action="Like" asp-route-postId="@Model.Id">
+                            <img class="post__rate-img" src="/img/up.png" alt="">
+                        </a>
+                    </div>
+
+
+
+                    <div class="post__rate-total">
+                        @Model.TotalRate
+                    </div>
+
+
+
+                    <div class="post__rate">
+                        <a asp-action="Dislike" asp-route-postId="@Model.Id">
+                            <img class="post__rate-img" src="/img/down.png" alt="">
+                        </a>
+                    </div>
+                }
+                else
+                {
+
+                    <div class="post__rate">
+                        @if (userRate.Rate == Rate.Like)
+                        {
+                            <a asp-action="ResetRate" asp-route-postId="@Model.Id">
+                                <img class="post__rate-img" src="/img/up-selected.png" alt="">
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Like" asp-route-postId="@Model.Id">
+                                <img class="post__rate-img" src="/img/up.png" alt="">
+                            </a>
+                        }
+                    </div>
+
+                    <div class="post__rate-total">
+                        @Model.TotalRate
+                    </div>
+
+                    <div class="post__rate">
+
+                        @if (userRate.Rate == Rate.Dislike)
+                        {
+                            <a asp-action="ResetRate" asp-route-postId="@Model.Id">
+                                <img class="post__rate-img" src="/img/down-selected.png" alt="">
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Dislike" asp-route-postId="@Model.Id">
+                                <img class="post__rate-img" src="/img/down.png" alt="">
+                            </a>
+                        }
+
+                    </div>
+                }
+
+            </div>
+            <div class="post__favorite">
+
+                @if (FavoriteRepository.ContainPost(Model.Id, user))
+                {
+                    <a asp-controller="Favorite" asp-action="Remove" asp-route-postId="@Model.Id">
+                        <img class="post__favorite-img" src="/img/favorite-selected.png" alt="">
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Favorite" asp-action="Add" asp-route-postId="@Model.Id">
+                        <img class="post__favorite-img" src="/img/favorite.png" alt="">
+                    </a>
+                }
+
+
+            </div>
+        </div>
+        <div class="post__title">
+            <b>@Model.Subject</b>
+        </div>
+        <div class="post__content">
+            <p>@Model.Content</p>
+        </div>
+    </div>
+    <div class="post__comments">
+
+        @await Component.InvokeAsync("Comment", new { postId = Model.Id })
+
+        @foreach (var comment in Model.Comments)
+        {
+
+            CommentRate commentRate = comment.UserRate(user);
+
+            <div class="comment">
+                <div class="comment__top">
+                    <div class="comment__username-wrapper">
+                        <u>@comment.User.UserName</u>
+                    </div>
+                    <div class="comment__rate-wrapper">
+
+
+                        @if (commentRate == null || commentRate.Rate == Rate.None)
+                        {
+
+                            <div class="comment__rate-container">
+                                <div class="comment__rate">
+                                    <a asp-controller="Comment" asp-action="Like" asp-route-commentId="@comment.Id">
+                                        <img class="comment__rate-img" src="/img/up.png" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="comment__rate-total">
+                                    @comment.LikeCount
+                                </div>
+                            </div>
+
+                            <div class="comment__rate-container">
+                                <div class="comment__rate">
+                                    <a asp-controller="Comment" asp-action="Dislike" asp-route-commentId="@comment.Id">
+                                        <img class="comment__rate-img" src="/img/down.png" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="comment__rate-total">
+                                    @comment.DislikeCount
+                                </div>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="comment__rate-container">
+                                <div class="comment__rate">
+                                    @if (commentRate.Rate == Rate.Like)
+                                    {
+                                        <a asp-controller="Comment" asp-action="ResetRate" asp-route-commentId="@comment.Id">
+                                            <img class="comment__rate-img" src="/img/up-selected.png" alt="">
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Comment" asp-action="Like" asp-route-commentId="@comment.Id">
+                                            <img class="comment__rate-img" src="/img/up.png" alt="">
+                                        </a>
+                                    }
+                                </div>
+
+
+
+                                <div class="comment__rate-total">
+                                    @comment.LikeCount
+                                </div>
+                            </div>
+
+
+
+                            <div class="comment__rate-container">
+                                <div class="comment__rate">
+                                    @if (commentRate.Rate == Rate.Dislike)
+                                    {
+                                        <a asp-controller="Comment" asp-action="ResetRate" asp-route-commentId="@comment.Id">
+                                            <img class="comment__rate-img" src="/img/down-selected.png" alt="">
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Comment" asp-action="Dislike" asp-route-commentId="@comment.Id">
+                                            <img class="comment__rate-img" src="/img/down.png" alt="">
+                                        </a>
+                                    }
+                                </div>
+
+
+
+                                <div class="comment__rate-total">
+                                    @comment.DislikeCount
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="comment__content">
+                    @comment.Content
+                </div>
+                <button class="comment__answer">Answer</button>
+            </div>
+        }
+    </div>
+</div>

@@ -19,11 +19,13 @@ namespace MyForumProject.Services.Ropositories
         public void Add(CommentNotification notification)
         {
             _context.Notifications.Add(notification);
+            _context.SaveChanges();
         }
 
         public async Task AddAsync(CommentNotification notification)
         {
             await _context.Notifications.AddAsync(notification);
+            await _context.SaveChangesAsync();
         }
 
         public bool Contain(long id)
@@ -39,6 +41,7 @@ namespace MyForumProject.Services.Ropositories
         public void Delete(CommentNotification notification)
         {
             _context.Notifications.Remove(notification);
+            _context.SaveChanges();
         }
 
         public void Delete(long id)
@@ -55,6 +58,7 @@ namespace MyForumProject.Services.Ropositories
         public void Update(CommentNotification notification)
         {
             _context.Notifications.Update(notification);
+            _context.SaveChanges();
         }
 
         public CommentNotification GetById(long id)

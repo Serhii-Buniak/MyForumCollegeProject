@@ -3,20 +3,22 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyForumProject.Data;
 
 namespace MyForumProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211215010018_FavoriteMigration")]
+    partial class FavoriteMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.12")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -97,10 +99,12 @@ namespace MyForumProject.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -137,10 +141,12 @@ namespace MyForumProject.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -226,7 +232,7 @@ namespace MyForumProject.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("PostId")
+                    b.Property<long>("PostId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId")
@@ -248,9 +254,8 @@ namespace MyForumProject.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("CommentId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
@@ -260,6 +265,8 @@ namespace MyForumProject.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("UserId");
 
@@ -330,7 +337,6 @@ namespace MyForumProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -418,24 +424,34 @@ namespace MyForumProject.Migrations
 
             modelBuilder.Entity("MyForumProject.Models.Comment", b =>
                 {
-                    b.HasOne("MyForumProject.Models.Post", null)
+                    b.HasOne("MyForumProject.Models.Post", "Post")
                         .WithMany("Comments")
-                        .HasForeignKey("PostId");
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MyForumProject.Models.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("MyForumProject.Models.CommentNotification", b =>
                 {
+                    b.HasOne("MyForumProject.Models.Comment", "Comment")
+                        .WithMany()
+                        .HasForeignKey("CommentId");
+
                     b.HasOne("MyForumProject.Models.AppUser", "User")
                         .WithMany("Notifications")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Comment");
 
                     b.Navigation("User");
                 });
@@ -443,7 +459,7 @@ namespace MyForumProject.Migrations
             modelBuilder.Entity("MyForumProject.Models.CommentRate", b =>
                 {
                     b.HasOne("MyForumProject.Models.Comment", "Comment")
-                        .WithMany("Comments")
+                        .WithMany("Rates")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -478,9 +494,7 @@ namespace MyForumProject.Migrations
                 {
                     b.HasOne("MyForumProject.Models.AppUser", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -513,7 +527,7 @@ namespace MyForumProject.Migrations
 
             modelBuilder.Entity("MyForumProject.Models.Comment", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("Rates");
                 });
 
             modelBuilder.Entity("MyForumProject.Models.Post", b =>

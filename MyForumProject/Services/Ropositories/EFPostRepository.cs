@@ -19,11 +19,13 @@ namespace MyForumProject.Services.Ropositories
         public void Add(Post post)
         {
             _context.Posts.Add(post);
+            _context.SaveChanges();
         }
 
         public async Task AddAsync(Post post)
         {
             await _context.Posts.AddAsync(post);
+            await _context.SaveChangesAsync();
         }
 
         public bool Contain(long id)
@@ -39,6 +41,7 @@ namespace MyForumProject.Services.Ropositories
         public void Delete(Post post)
         {
             _context.Posts.Remove(post);
+            _context.SaveChanges();
         }
 
         public void Delete(long id)
@@ -55,6 +58,7 @@ namespace MyForumProject.Services.Ropositories
         public void Update(Post post)
         {
             _context.Posts.Update(post);
+            _context.SaveChanges();
         }
 
         public Post GetById(long id)

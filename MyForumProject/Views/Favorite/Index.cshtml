@@ -1,0 +1,43 @@
+﻿@model IEnumerable<MyForumProject.Models.FavoritePost>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Favorite</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Post.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Post.User.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Post.TotalRate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Post" asp-action="Details" asp-route-id="@item.Post.Id">@Html.DisplayFor(modelItem => item.Post.Subject)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Post.User.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Post.TotalRate)
+                </td>
+                <td>
+                      <a asp-controller="Favorite" asp-action="Delete" asp-route-Id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

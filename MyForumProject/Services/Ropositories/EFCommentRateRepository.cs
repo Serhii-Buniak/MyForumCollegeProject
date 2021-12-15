@@ -19,11 +19,13 @@ namespace MyForumProject.Services.Ropositories
         public void Add(CommentRate rate)
         {
             _context.CommentRates.Add(rate);
+            _context.SaveChanges();
         }
 
         public async Task AddAsync(CommentRate rate)
         {
             await _context.CommentRates.AddAsync(rate);
+            await _context.SaveChangesAsync();
         }
 
         public bool Contain(long id)
@@ -39,6 +41,7 @@ namespace MyForumProject.Services.Ropositories
         public void Delete(CommentRate rate)
         {
             _context.CommentRates.Remove(rate);
+            _context.SaveChanges();
         }
 
         public void Delete(long id)
@@ -55,6 +58,7 @@ namespace MyForumProject.Services.Ropositories
         public void Update(CommentRate rate)
         {
             _context.CommentRates.Update(rate);
+            _context.SaveChanges();
         }
 
         public CommentRate GetById(long id)

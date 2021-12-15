@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MyForumProject.Models.CommentNotification>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Notification</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment.Post.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.UserName)
+            </th>
+            <th>
+
+                <a>@Html.DisplayNameFor(model => model.Comment.Content)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                   <a asp-controller="Post" asp-action="Details" asp-route-id="@item.Comment.Post.Id"> @Html.DisplayFor(modelItem => item.Comment.Post.Subject)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                </td>
+                <td>
+                    @{
+                        var text = item.Comment.Content;
+                        var spaceIndex = text.IndexOf(' ');
+                        text = text.Remove(0, spaceIndex);
+                    }
+                    @text
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
