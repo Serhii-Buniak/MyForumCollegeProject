@@ -39,6 +39,6 @@ __Answer:__
 
 ![Answer.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/Answer.png)
 
-__Notification__
+__Notification:__
 
 ![Notification.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/Notification.png)
