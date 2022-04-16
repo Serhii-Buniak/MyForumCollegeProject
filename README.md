@@ -2,7 +2,7 @@
 
 __Database model:__
 
-![Db.png](Db.png)
+![Db.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/Db.png)
 
 __Functionality:__
 * Possibility to create a post
@@ -13,32 +13,32 @@ __Functionality:__
 * Possibility to reply to a comment
 
 ## Create a post
-![Create.png](Create.png)
+![Create.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/Create.png)
 
 ## Comment
-![Comment.png](Comment.png)
+![Comment.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/Comment.png)
 
 ## Rate posts
-![RatePost.png](RatePost.png)
+![RatePost.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/RatePost.png)
 
 ## Rate comment
-![RateComment.png](RateComment.png)
+![RateComment.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/RateComment.png)
 
 ## List of favorites
 __Button:__
 
-![FavoriteBtn.png](FavoriteBtn.png)
+![FavoriteBtn.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/FavoriteBtn.png)
 
 __List:__
 
-![FavoriteList.png](FavoriteList.png)
+![FavoriteList.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/FavoriteList.png)
 
 ## Reply to a comment
 
 __Answer:__
 
-![FavoriteList.png](FavoriteList.png)
+![Answer.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/Answer.png)
 
 __Notification__
 
-![Notification.png](Notification.png)
+![Notification.png](https://github.com/Serhii-Buniak/MyForumCollegeProject/blob/master/files_for_readme/Notification.png)
